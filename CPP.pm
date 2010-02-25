@@ -29,8 +29,8 @@ sub register {
 #============================================================================
 sub validate {
     my $o = shift;
-    $o->{ILSM}{MAKEFILE}{CC} ||= '@COMPILER'; # default compiler
-    $o->{ILSM}{MAKEFILE}{LIBS} ||= ['@DEFAULTLIBS']; # default libs
+    $o->{ILSM}{MAKEFILE}{CC} ||= 'g++'; # default compiler
+    $o->{ILSM}{MAKEFILE}{LIBS} ||= ['-lstdc++']; # default libs
 
     # I haven't traced it out yet, but $o->{STRUCT} gets set before getting
     # properly set from Inline::C's validate().
@@ -42,7 +42,7 @@ sub validate {
 		     };
     $o->{ILSM}{AUTO_INCLUDE} ||= <<END;
 #ifndef bool
-#include <%iostream%>
+#include <iostream>
 #endif
 extern "C" {
 #include "EXTERN.h"
@@ -52,9 +52,9 @@ extern "C" {
 }
 #ifdef bool
 #undef bool
-#include <%iostream%>
+#include <iostream>
 #endif
-
+using namespace std;
 END
     $o->{ILSM}{PRESERVE_ELLIPSIS} = 0 
       unless defined $o->{ILSM}{PRESERVE_ELLIPSIS};
