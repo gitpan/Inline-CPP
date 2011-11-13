@@ -2,8 +2,8 @@ use ExtUtils::MakeMaker;
 use Config;
 
 my %PREREQ_PM = (
-	Inline => '0.42',
-	'Inline::C' => '0.42',
+    Inline => '0.42',
+    'Inline::C' => '0.42',
 );
 #============================================================================
 # We'll do our own prerequisite checking, since MakeMaker does it
@@ -45,11 +45,11 @@ elsif ($Config{osname} eq 'darwin'){
 elsif ($Config{osname} eq 'solaris' or $Config{osname} eq 'SunOS') {
     if ($Config{cc} eq 'gcc') {
         $cc_guess = 'g++';
-	$libs_guess = '-lstdc++';
+    $libs_guess = '-lstdc++';
     }
     else {
-	$cc_guess = 'CC';
-	$libs_guess ='-lCrun';
+    $cc_guess = 'CC';
+    $libs_guess ='-lCrun';
     }
 }
 # Sane defaults for other (probably unix-like) operating systems
@@ -61,9 +61,9 @@ else {
 print "This will configure and build Inline::C++.\n";
 
 my $cpp_compiler = prompt("What default C++ compiler would you like to use?",
-			  $cc_guess);
+              $cc_guess);
 my $libs = prompt("What default libraries would you like to include?",
-		  $libs_guess);
+          $libs_guess);
 
 # Apply the defaults:
 open CPP, "CPP.pm";
@@ -71,8 +71,12 @@ my @lines = <CPP>;
 close CPP;
 
 for (@lines) {
-    s|\@COMPILER|$cpp_compiler| if m|\# default compiler|;
-    s|\@DEFAULTLIBS|$libs| if m|\# default libs|;
+#    s|\@COMPILER|$cpp_compiler| if m|\# default compiler|;
+#    s|\@DEFAULTLIBS|$libs| if m|\# default libs|;
+$_ = " \$o->{ILSM}{MAKEFILE}{CC} ||= '$cpp_compiler'; # default compiler\n" 
+    if $_ =~ /# default compiler/;
+$_  = " \$o->{ILSM}{MAKEFILE}{LIBS} ||= ['$libs']; # default libs\n" 
+    if $_ =~ /# default libs/;
 }
 
 open CPP, ">CPP.pm"
@@ -81,10 +85,10 @@ print CPP @lines;
 close CPP;
 
 WriteMakefile(
-	      NAME => 'Inline::CPP',
-	      VERSION_FROM => 'CPP.pm',
-	      PREREQ_PM => {
-		  'Inline::C' => '0.42',
-	      },
-	      clean => {FILES => '_Inline/ grammar/_Inline'},
-	     );
+          NAME => 'Inline::CPP',
+          VERSION_FROM => 'CPP.pm',
+          PREREQ_PM => {
+          'Inline::C' => '0.42',
+          },
+          clean => {FILES => '_Inline/ grammar/_Inline'},
+         );

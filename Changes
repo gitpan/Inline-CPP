@@ -1,4 +1,8 @@
 Revision history for Perl extension Inline::CPP.
+0.30  Sun Nov 13 15:30:00 PST 2011
+    [Applied two patches contributed by sisyphus.]
+    - Maintain backward compatibility with compilers that still require the
+      '.h' extension on <iostream>.
 0.29  Sat Nov 12 20:30:00 PST 2011
     [Patches applied by David Oswald - davido@cpan.org]
     - Added code to Makefile.PL so that it will install on Mac OS's.
@@ -16,76 +20,76 @@ Revision history for Perl extension Inline::CPP.
       to v0.28, listed above.
       
 0.25  Tue Aug 12 17:03:44 PDT 2003
-	[Accepted two patches from Nicholas Clark]
-	- works with Parse::RecDescent 1.90 and later
-	- use g++ in the same path as gcc, if perl was built with gcc
-	[Reported by Anthony Bouvier]
-	- fix a compile error in POD's example code
+    [Accepted two patches from Nicholas Clark]
+    - works with Parse::RecDescent 1.90 and later
+    - use g++ in the same path as gcc, if perl was built with gcc
+    [Reported by Anthony Bouvier]
+    - fix a compile error in POD's example code
 
 0.24  Mon May 27 22:25:38 PDT 2002
-	[Accepted patch from Sean O'Rourke]
-	- unhandled types ignored, rather than causing an error
-	- typenames and identifiers can now include more C++ noise
-	- operators are correctly recognized (and ignored)
-	- nested classes are ignored
-	- non-inline constructor bodies are ignored
+    [Accepted patch from Sean O'Rourke]
+    - unhandled types ignored, rather than causing an error
+    - typenames and identifiers can now include more C++ noise
+    - operators are correctly recognized (and ignored)
+    - nested classes are ignored
+    - non-inline constructor bodies are ignored
 
 0.23  Sun Jul 15 15:53:02 PDT 2001
-	- Allow declaration lists: int a, b;
-	- Allow initializer lists: Foo(double _o) : o(_o) { }
-	- Added a test case for both of these.
+    - Allow declaration lists: int a, b;
+    - Allow initializer lists: Foo(double _o) : o(_o) { }
+    - Added a test case for both of these.
 
 0.23  Sat Jul  7 15:00:55 PDT 2001
-	- Renamed subs to use Inline::C's new naming scheme. Refactored some 
-	  common code into a new sub named call_or_instantiate().
+    - Renamed subs to use Inline::C's new naming scheme. Refactored some 
+      common code into a new sub named call_or_instantiate().
 
 0.23  Fri Jul  6 19:51:23 PDT 2001
-	- Added smart-sense for Sun 2.6 (Solaris 6). Needed to include 
-	  libCrun.so.
+    - Added smart-sense for Sun 2.6 (Solaris 6). Needed to include 
+      libCrun.so.
 
 0.23  Wed Jun 20 00:56:58 PDT 2001
-	- Fixed a grammar bug to allow modifiers on member variables.
-	- Added a test case for it.
+    - Fixed a grammar bug to allow modifiers on member variables.
+    - Added a test case for it.
 
 0.22  Mon Jun 11 11:35:26 PDT 2001
-	- Compatible with Inline::0.42 (not backwards compatible).
+    - Compatible with Inline::0.42 (not backwards compatible).
 
 0.21  Wed Jun  6 08:55:50 PDT 2001
-	- Compatible with Inline::0.40 (not backwards compatible).
-	- Documentation improvements.
+    - Compatible with Inline::0.40 (not backwards compatible).
+    - Documentation improvements.
 
 0.20  Wed May  2 23:00:50 PDT 2001
-	- Made Inline::CPP a subclass of Inline::C. Moved most functionality
-	  into Inline::C, and trimmed code a lot.
-	- Fixed bug in handling of 'LIBS' config option. Added a 'ALTLIBS'
-	  config option which adds a new element to the list of alternate
-	  libs.
-	- Added 'PRESERVE_ELLIPSIS' option, which prevents Inline::CPP from
-	  replacing '...' arguments with nothing.
-	- Inline::CPP now works on Cygwin!
-	- Grammar improvements:
-		- Inline functions
-		- Inheritance
-		- Default parameters: void foo(int a=10, char *b="Hello");
-		- Unnamed parameters: void foo(int, char *);
-		- Support for public, private and protected scopes
-		- 'structs' are now bound just like classes, except the
-		  default scope is public.
-		- Support for no fixed arguments: void foo(...);
+    - Made Inline::CPP a subclass of Inline::C. Moved most functionality
+      into Inline::C, and trimmed code a lot.
+    - Fixed bug in handling of 'LIBS' config option. Added a 'ALTLIBS'
+      config option which adds a new element to the list of alternate
+      libs.
+    - Added 'PRESERVE_ELLIPSIS' option, which prevents Inline::CPP from
+      replacing '...' arguments with nothing.
+    - Inline::CPP now works on Cygwin!
+    - Grammar improvements:
+        - Inline functions
+        - Inheritance
+        - Default parameters: void foo(int a=10, char *b="Hello");
+        - Unnamed parameters: void foo(int, char *);
+        - Support for public, private and protected scopes
+        - 'structs' are now bound just like classes, except the
+          default scope is public.
+        - Support for no fixed arguments: void foo(...);
 
 0.14  Tue Mar 13 23:10:14 PST 2001
-	- Moved the distribution module from CPP_pm to CPP.pm to get 
-	  Inline::CPP indexed properly.
-	- Fixed some minor bugs.
+    - Moved the distribution module from CPP_pm to CPP.pm to get 
+      Inline::CPP indexed properly.
+    - Fixed some minor bugs.
 
 0.13  Sun Mar  4 22:09:35 PST 2001
-	- Added Win32-specific configuration code to add '-TP' flag to compiler
-	- Special case for AIX ($Config{so})
-	- Added the following configuration options: 'CC', 'LD', 'CCFLAGS', 'LDDLFLAGS', 'MYEXTLIB', and 'MAKE': proxies for the MakeMaker options of the same name.
+    - Added Win32-specific configuration code to add '-TP' flag to compiler
+    - Special case for AIX ($Config{so})
+    - Added the following configuration options: 'CC', 'LD', 'CCFLAGS', 'LDDLFLAGS', 'MYEXTLIB', and 'MAKE': proxies for the MakeMaker options of the same name.
 
 0.12  Sun Jan 21 17:16:43 PST 2001
-	- Upgraded modules to conform to Inline-0.31
-	- Documentation upgrades
+    - Upgraded modules to conform to Inline-0.31
+    - Documentation upgrades
 
 0.11  Thu Nov 23 16:46:27 PST 2000
-	- Created Inline::CPP. 
+    - Created Inline::CPP. 
