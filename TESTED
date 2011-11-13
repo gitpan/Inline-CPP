@@ -1,3 +1,13 @@
+Note:  As of November 12, 2011 this list is outdated.  However, there seems
+to be no good reason to invest time in updating it, since the CPAN Testers
+Matrix is a more thorough, fully automated, and publically viewable resource
+for determining what works and what doesn't.  
+
+This list will be kept as-is for historical reasons, but do refer to the
+CPAN Testers Matrix for more up to date information.
+
+# ----------------- Outdated TESTED content follows -------------------------
+
 This is a list I try to keep as up-to-date as possible with the state
 of the module. This list is known to be up to date with Inline::CPP 
 version 0.20.

@@ -1,15 +1,20 @@
 Revision history for Perl extension Inline::CPP.
-0.28  Sun Nov 12 12:45:00 PST 2011
-        [Patch by David Oswald - davido@cpan.org]
-        - CPP.pm: Eliminated appending '.h' to <iostream> to become
-          compatible with modern C++.
-        - Added "using namespace std;", again to modernize.
-        - Updated to verstion 0.28 throughout distribution.
-        - Now passes test suite for Windows Vista64 with Strawberry
-          Perl 5.14.
-        - Now passes test suite for Ubuntu Linux 11.10 with
-          Perl 5.14
+0.29  Sat Nov 12 20:30:00 PST 2011
+    [Patches applied by David Oswald - davido@cpan.org]
+    - Added code to Makefile.PL so that it will install on Mac OS's.
+    - Applied a longstanding type-conversion patch by Sisyphus.
+0.28  Sat Nov 12 12:45:00 PST 2011
+    [Patches applied by David Oswald - davido@cpan.org]
+    - CPP.pm - Stop appending '.h' to <iostream>
+    - Now it passes its test suite for Windows Vista 64 with Strawberry Perl
+      version 5.14.
+    - Now it passes its test suite for Ubuntu Linux 11.10 with Perl 5.14.
 
+0.27  Unknown date 
+    [Undocumented release.]
+    - Repaired the iostream(.h) issue.  A similar patch was later applied
+      to v0.28, listed above.
+      
 0.25  Tue Aug 12 17:03:44 PDT 2003
 	[Accepted two patches from Nicholas Clark]
 	- works with Parse::RecDescent 1.90 and later

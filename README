@@ -33,6 +33,9 @@ When run, this complete program prints:
 -----------------------------------------------------------------------------
 FEATURES:
 
+Inline::CPP version 0.29 includes several bugfixes that had been in the
+pipeline for a few years.
+
 Inline::CPP version 0.25 is a minor upgrade from previous versions. It
 includes:
 

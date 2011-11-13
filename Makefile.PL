@@ -36,6 +36,12 @@ elsif ($Config{osname} eq 'cygwin') {
     $cc_guess = 'g++';
     $libs_guess = '-lstdc++';
 }
+elsif ($Config{osname} eq 'darwin'){
+    my $stdlib_query = 'find /usr/lib/gcc -name "libstdc++*" | grep $( uname -p )';
+    my $stdcpp = `$stdlib_query`; + $stdcpp =~ s/^(.*)\/[^\/]+$/$1/;
+    $cc_guess = 'g++';
+    $libs_guess = "-L$stdcpp -lstdc++";
+}
 elsif ($Config{osname} eq 'solaris' or $Config{osname} eq 'SunOS') {
     if ($Config{cc} eq 'gcc') {
         $cc_guess = 'g++';
