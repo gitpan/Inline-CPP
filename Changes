@@ -1,4 +1,14 @@
 Revision history for Perl extension Inline::CPP.
+0.28  Sun Nov 12 12:45:00 PST 2011
+        [Patch by David Oswald - davido@cpan.org]
+        - CPP.pm: Eliminated appending '.h' to <iostream> to become
+          compatible with modern C++.
+        - Added "using namespace std;", again to modernize.
+        - Updated to verstion 0.28 throughout distribution.
+        - Now passes test suite for Windows Vista64 with Strawberry
+          Perl 5.14.
+        - Now passes test suite for Ubuntu Linux 11.10 with
+          Perl 5.14
 
 0.25  Tue Aug 12 17:03:44 PDT 2003
 	[Accepted two patches from Nicholas Clark]

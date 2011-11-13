@@ -8,7 +8,7 @@ use Carp;
 use vars qw(@ISA $VERSION);
 
 @ISA = qw(Inline::C);
-$VERSION = '0.25';
+$VERSION = '0.28';
 my $TYPEMAP_KIND = $Inline::CPP::grammar::TYPEMAP_KIND;
 
 #============================================================================
@@ -88,10 +88,10 @@ END
 	push @propagate, $key, $value;
     }
 
-    # Replace %iostream% with the correct iostream library
-    my $iostream = "iostream";
-    $iostream .= ".h" unless $o->{ILSM}{STD_IOSTREAM};
-    $o->{ILSM}{AUTO_INCLUDE} =~ s|%iostream%|$iostream|g;
+#    # Replace %iostream% with the correct iostream library
+#    my $iostream = "iostream";
+#    $iostream .= ".h" unless $o->{ILSM}{STD_IOSTREAM};
+#    $o->{ILSM}{AUTO_INCLUDE} =~ s|%iostream%|$iostream|g;
 
     # Forward all unknown requests up to Inline::C
     $o->SUPER::validate(@propagate) if @propagate;
