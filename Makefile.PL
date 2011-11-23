@@ -89,6 +89,7 @@ WriteMakefile(
           VERSION_FROM => 'CPP.pm',
           PREREQ_PM => {
           'Inline::C' => '0.42',
+          'Parse::RecDescent' => 0,
           },
           clean => {FILES => '_Inline/ grammar/_Inline'},
          );

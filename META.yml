@@ -19,4 +19,5 @@ no_index:
     - inc
 requires:
   Inline::C: 0.42
-version: 0.30
+  Parse::RecDescent: 0
+version: 0.31

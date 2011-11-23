@@ -751,7 +751,7 @@ Brian Ingerson <INGY@cpan.org> is the author of C<Inline>,
 C<Inline::C> and C<Inline::CPR>. He is known in the innermost Inline
 circles as "Batman". ;)
 
-=head1 COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
 Copyright (c) 2000 - 2001, Neil Watkiss.
 
