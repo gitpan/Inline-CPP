@@ -1,11 +1,19 @@
 Revision history for Perl extension Inline::CPP.
-0.31  Mon Nov 22 21:17:00 PST 2011
+0.32  Wed Nov 23 17:42:00 PST 2011
+    [Patches by David Oswald]
+    - Version of Inline::CPP and grammar.pm updated to 0.32.
+    - Adjustments to the POD for clarity.
+    - Makefile.PL now requires Inline v0.49 to take advantage of the
+      patch there that eliminates M18 install errors for Inline plugins.
+      This should eliminate the bulk of the smoke test issues.
+0.31  Tue Nov 22 21:17:00 PST 2011
     [Patches by David Oswald - davido@cpan.org]
-    - Updated Makefile.PL to include Parse::RecDescent to the PREREQ_PM list.
+    - Updated Makefile.PL to include Parse::RecDescent to the PREREQ_PM
+      list.
 0.30  Sun Nov 13 15:30:00 PST 2011
     [Applied two patches contributed by sisyphus.]
-    - Maintain backward compatibility with compilers that still require the
-      '.h' extension on <iostream>.
+    - Maintain backward compatibility with compilers that still require
+      the '.h' extension on <iostream>.
 0.29  Sat Nov 12 20:30:00 PST 2011
     [Patches applied by David Oswald - davido@cpan.org]
     - Added code to Makefile.PL so that it will install on Mac OS's.
@@ -13,15 +21,16 @@ Revision history for Perl extension Inline::CPP.
 0.28  Sat Nov 12 12:45:00 PST 2011
     [Patches applied by David Oswald - davido@cpan.org]
     - CPP.pm - Stop appending '.h' to <iostream>
-    - Now it passes its test suite for Windows Vista 64 with Strawberry Perl
-      version 5.14.
-    - Now it passes its test suite for Ubuntu Linux 11.10 with Perl 5.14.
+    - Now it passes its test suite for Windows Vista 64 with Strawberry
+      Perl version 5.14.
+    - Now it passes its test suite for Ubuntu Linux 11.10 with
+      Perl 5.14.
 
-0.27  Unknown date 
+0.27  Unknown date
     [Undocumented release.]
-    - Repaired the iostream(.h) issue.  A similar patch was later applied
-      to v0.28, listed above.
-      
+    - Repaired the iostream(.h) issue.  A similar patch was later
+      applied to v0.28, listed above.
+
 0.25  Tue Aug 12 17:03:44 PDT 2003
     [Accepted two patches from Nicholas Clark]
     - works with Parse::RecDescent 1.90 and later
@@ -43,11 +52,11 @@ Revision history for Perl extension Inline::CPP.
     - Added a test case for both of these.
 
 0.23  Sat Jul  7 15:00:55 PDT 2001
-    - Renamed subs to use Inline::C's new naming scheme. Refactored some 
+    - Renamed subs to use Inline::C's new naming scheme. Refactored some
       common code into a new sub named call_or_instantiate().
 
 0.23  Fri Jul  6 19:51:23 PDT 2001
-    - Added smart-sense for Sun 2.6 (Solaris 6). Needed to include 
+    - Added smart-sense for Sun 2.6 (Solaris 6). Needed to include
       libCrun.so.
 
 0.23  Wed Jun 20 00:56:58 PDT 2001
@@ -81,7 +90,7 @@ Revision history for Perl extension Inline::CPP.
         - Support for no fixed arguments: void foo(...);
 
 0.14  Tue Mar 13 23:10:14 PST 2001
-    - Moved the distribution module from CPP_pm to CPP.pm to get 
+    - Moved the distribution module from CPP_pm to CPP.pm to get
       Inline::CPP indexed properly.
     - Fixed some minor bugs.
 
@@ -95,4 +104,4 @@ Revision history for Perl extension Inline::CPP.
     - Documentation upgrades
 
 0.11  Thu Nov 23 16:46:27 PST 2000
-    - Created Inline::CPP. 
+    - Created Inline::CPP.

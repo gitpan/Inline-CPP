@@ -34,9 +34,9 @@ script. Choosing a C++ compiler can prove difficult, because Perl is
 written in C, not C++.
 
 Here's the rule: use any C++ compiler that's compatible with the compiler
-which built perl. For instance, if perl was built with C<gcc>, use C<g++>.
-If you're on a Sun or an IRIX box and the system C compiler C<cc> built perl,
-then use the system C++ compiler, C<CC>. 
+which built C<perl>. For instance, if C<perl> was built with C<gcc>, 
+use C<g++>.  If you're on a Sun or an IRIX box and the system C compiler 
+C<cc> built C<perl>, then use the system C++ compiler, C<CC>. 
 
 Some compilers actually compile both C and C++ with the same compiler. 
 Microsoft's C<cl.exe> is one such compiler -- you pass it the <-TP> flag
@@ -205,8 +205,7 @@ to the MakeMaker parameter.
 
 Specifies a prefix that will automatically be stripped from C++
 functions when they are bound to Perl. Less useful than in C, because
-C++ mangles its function names so they don't conflict with C functions
-of the same name.
+C++ mangles its function names to facilitate function overloading.
 
    use Inline Config => PREFIX => 'ZLIB_';
 
@@ -228,10 +227,16 @@ examples section, below.
 
 =head2 STD_IOSTREAM
 
-By default, Inline::CPP includes C<iostream.h> at the top of your code.
-This option makes it include C<iostream> instead, which is the
+By default, Inline::CPP includes the standard iostream header at the top
+of your code.  Inline::CPP will try to make the proper selection between 
+C<iostream.h> (for older compilers) and C<iostream> (for newer "compliant" 
+compilers).
+
+This option assures that it include C<iostream>, which is the
 ANSI-compliant version of the header. Usually, these include files are
-not compatible with one another.
+not compatible with one another.  For modern compilers the use of this
+configuration option should no longer be necessary.  It is still included 
+to maintain backward compatibility with code that used to need it.
 
    use Inline CPP => Config => ENABLE => STD_IOSTREAM;
 
@@ -580,9 +585,13 @@ a few more new features of Inline::CPP: default values to arguments,
 
 =head1 Grammar Details
 
-Perl 5.6.0 is recommended for Inline::CPP, and is required to get all the 
-new features. If you are using Perl 5.005_03 the package will build and run, 
-but you will have problems in certain circumstances:
+As Inline currently requires Perl 5.6.0 or newer, and Inline::CPP depends on
+Inline, Perl 5.6.0 is required for Inline::CPP too.  Historically 5.6.0 was 
+required to get all the "new" features, although Perl 5.005_03 was supported
+with limited functionality up to Inline::CPP version 0.25.  It's hard to
+imagine anyone still using a Perl older than 5.6.0 wanting to interface with
+C++, but if you're in that camp, you'll need to roll back Inline and 
+Inline::CPP to older versions through the magic of backpan.
 
 =head2 Inline function definitions
 
@@ -594,8 +603,9 @@ described by this example:
        Foo() { /* Do something */ }
    };
 
-This example shows a class with a constructor defined inline. Inline::CPP can
-parse this example with 5.005. But this example requires Perl 5.6.0:
+This example shows a class with a constructor defined inline. Inline::CPP 
+version 0.25 or older could parse this example with 5.005. But this example 
+requires Perl 5.6.0:
 
    class Foo {
      public:
@@ -656,15 +666,15 @@ Make the strange expression a constant or macro and use that.
 
 =back
 
-=head2 Rant: Perl 5.005 is for Dummies
+=head2 Advice on Perl versions
 
-I'm going to take the opportunity to rant. Everything in the rest of this
-section can be ignored if you don't want to hear it.
+Inline::CPP no longer actively supports Perl versions prior to 5.6.0.  This
+shouldn't be an issue for anyone because Inline and Inline::C also no longer
+support Perl versions prior to 5.6.0.  If you are in the unlikely position 
+of having a code base that uses Inline::CPP, and operates under a Perl older
+than 5.6.0, don't upgrade L<Inline>, L<Inline::C>, or Inline::CPP (unless you 
+intend to also upgrade to a version of Perl released in the 21st Century.)
 
-Perl 5.6.0 has been out for a long time. It's proven, stable, and people use 
-it all the time. Perl 5.6.1 is the latest stable release. Unless you depend 
-on one of the few modules which are only available for the ancient versions of 
-Perl, there is B<absolutely no reason> not to upgrade today!
 
 =head1 SEE ALSO
 
@@ -672,8 +682,8 @@ For general information about how C<Inline> binds code to Perl, see
 L<Inline>.
 
 For information on using C with Perl, see L<Inline::C> and
-L<Inline::C-Cookbook>. For C<WMTYEWTK>, see L<perlxs>,
-L<perlxstut>, L<perlapi>, and L<perlguts>.
+L<Inline::C-Cookbook>. For C<WMTYEWTK>, see L<perlguts>, L<perlxs>,
+L<perlxstut>, L<perlapi>, and L<perlcall>.
 
 For information on using C and C++ structs with Perl, see 
 L<Inline::Struct>.
@@ -723,19 +733,23 @@ future are:
 
 =item a
 
-support for overloaded functions and methods
+Improvements to the test suite.
 
 =item b
 
-binding to constants and constant #defines
+Support for overloaded functions and methods
 
 =item c
 
-binding to unions
+Binding to constants and constant #defines
 
 =item d
 
-autogenerated get/set methods on public members
+Binding to unions
+
+=item e
+
+Autogenerated get/set methods on public members
 
 =back
 
@@ -745,7 +759,7 @@ autogenerated get/set methods on public members
 
 Neil Watkiss <NEILW@cpan.org>
 
-David Oswald <DAVIDO@cpan.org> is a co-maintainer.
+David Oswald <DAVIDO@cpan.org> is a current co-maintainer.
 
 Brian Ingerson <INGY@cpan.org> is the author of C<Inline>,
 C<Inline::C> and C<Inline::CPR>. He is known in the innermost Inline

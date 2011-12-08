@@ -2,7 +2,7 @@ package Inline::CPP::grammar;
 
 use strict;
 use vars qw($TYPEMAP_KIND $VERSION $class_part $class_decl $star);
-$VERSION = '0.25';
+$VERSION = '0.32';
 
 # Parse::RecDescent 1.90 and later have an incompatible change
 # 'The key of an %item entry for a repeated subrule now includes
