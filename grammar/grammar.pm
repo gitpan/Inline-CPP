@@ -2,7 +2,7 @@ package Inline::CPP::grammar;
 
 use strict;
 use vars qw($TYPEMAP_KIND $VERSION $class_part $class_decl $star);
-$VERSION = '0.32';
+$VERSION = '0.33';
 
 # Parse::RecDescent 1.90 and later have an incompatible change
 # 'The key of an %item entry for a repeated subrule now includes
@@ -11,10 +11,38 @@ $VERSION = '0.32';
 # the version of Parse::RecDescent we are using.
 
 require Parse::RecDescent;
-($class_part, $class_decl, $star) =
-  map {($Parse::RecDescent::VERSION > 1.89) ? "$_(s?)" : $_}
-  qw (class_part class_decl star);
 
+
+# --------------------------------------------------
+# Patch to deal with Parse::RecDescent's funky version numbers for development
+# releases (eg, '1.96_000') resulting in a warning about non-numeric in >
+# comparison.  -----------------
+{
+    # Create a lexical scope so that $stable_version vanishes after we're
+    # done with it.  Capture only the portion of the version number that
+    # comes before an underscore.  "1.96_000" => "1.96".
+    # Use that "stable release" version number as the basis for our numeric
+    # comparison.
+    my ( $stable_version ) = $Parse::RecDescent::VERSION =~ m/([\d.]+)/;
+    if( not defined( $stable_version ) ) {
+        $stable_version = $Parse::RecDescent::VERSION
+    }
+    ($class_part, $class_decl, $star) =
+        map {
+            ($stable_version > 1.89) 
+            ? "$_(s?)" 
+            : $_
+        } qw (class_part class_decl star);
+# End our lexical scope.
+}
+
+# ---------- End patch.  May roll-back if Parse::RecDescent gets fixed.
+
+# Orginal code before the version number patch.
+#    ($class_part, $class_decl, $star) =
+#        map {($Parse::RecDescent::VERSION > 1.89) ? "$_(s?)" : $_}
+#            qw (class_part class_decl star);
+# -------------------------------------------------------
 
 #============================================================================
 # Regular expressions to match code blocks, numbers, strings, parenthesized

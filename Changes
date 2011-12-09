@@ -1,5 +1,12 @@
 Revision history for Perl extension Inline::CPP.
-0.32  Wed Nov 23 17:42:00 PST 2011
+0.33  Thu Dec 8 22:06:00 PST 2011
+    [Patches by David Oswald]
+    - Fixed issue where grammar.pm wasn't able to deal with Parse::RecDescent
+      improper handling of "Developer Release" version numbers.
+    - Fixed issue with test suite where a test was failing due to C++
+      implementation dependent handling of floating point math.
+    - Updated version number to 0.33 in CPP.pm and grammar.pm.
+0.32  Wed Dec 7 23:42:00 PST 2011
     [Patches by David Oswald]
     - Version of Inline::CPP and grammar.pm updated to 0.32.
     - Adjustments to the POD for clarity.
