@@ -33,7 +33,7 @@ When run, this complete program prints:
 -----------------------------------------------------------------------------
 FEATURES:
 
-Inline::CPP version 0.33_001 is a dev. version.  It includes a bug fix aimed 
+Inline::CPP version 0.33_002 is a dev. version.  It includes a bug fix aimed
 at better detecting Standard C++ headers versus pre-Standard .h headers.
 
 -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ INFORMATION:
 
 - For more information on Inline::CPP see 'perldoc Inline::CPP'.
 - For information about Inline.pm, see 'perldoc Inline'.
-- For information about Inline::C (of which this is a subclass) 
+- For information about Inline::C (of which this is a subclass)
   see 'perldoc Inline::C', as well as 'perldoc Inline::C-Cookbook'.
 - For information on using Perl with C or C++, see 'perldoc perlapi'
 

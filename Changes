@@ -1,4 +1,8 @@
 Revision history for Perl extension Inline::CPP.
+0.33_002  Tue Dec 20 10:10:00 PST 2011
+    [Patch submitted by BrowserUk, adapted by davido]
+    - Better handling of the '.h' code in Makefile.PL with respect to
+      MS-flavor compilers.
 0.33_001  Mon Dec 19 11:12:00 PST 2011
     [Patch submitted by sysiphus, adapted by davido]
     - Developer release to verify smoke tests without upsetting v0.33 stable.
