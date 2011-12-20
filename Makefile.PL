@@ -1,11 +1,28 @@
 use ExtUtils::MakeMaker;
 use Config;
+use diagnostics;
 
 my %PREREQ_PM = (
     'Inline' => '0.49',
     'Inline::C' => '0.49',
     'Parse::RecDescent' => '0',
 );
+
+#============================================================================
+# Makefile.PL will later create this as ilcpptest.cpp to verify that
+# the target system uses <iostream> versus <iostream.h> style headers.
+#============================================================================
+
+my $test_cpp_filename = 'ilcpptest'; # '.cpp' appended via open.
+my $test_cpp = <<'END_TEST_CPP';
+#include <iostream>
+int main(){
+    return 0;
+}
+END_TEST_CPP
+
+
+
 #============================================================================
 # We'll do our own prerequisite checking, since MakeMaker does it
 # in a way that always fails: 'use Inline::C 0.33' will never work.
@@ -75,14 +92,42 @@ my $libs = prompt(
         $libs_guess
 );
 
+#============================================================================
+# Test whether the compiler prefers <iostream> or <iostream.h>.
+#============================================================================
+open TESTCPP, ">$test_cpp_filename.cpp" 
+	or die "Makefile.PL: Couldn't open $test_cpp_filename for output:\n$!\n";
+print TESTCPP $test_cpp;
+close TESTCPP
+	or die "Makefile.PL: Couldn't close $test_cpp_filename:\n$!\n";
+
+# Compile our test C++ program that includes the <iostream> header.
+my $result = system( 
+	$cpp_compiler, 
+	'-o', "$test_cpp_filename.exe", 
+	"$test_cpp_filename.cpp"
+);
+
+my $iostream_fname_style = 'iostream';
+if( $result != 0 ) {
+	# Compiling with <iostream> failed, so we'll assume .h headers.
+	print "Detected <iostream.h> style headers. ('.h' needed.)\n";
+	$iostream_fname_style = 'iostream.h';
+} else {
+	# Compiling with <iostream> passed, so we'll assume Standard headers.
+	print "Detected <iostream> style headers. ('.h' not needed.)\n";
+	unlink "$test_cpp_filename.exe" or warn $!; # Unlink the executable.
+}
+
+unlink "$test_cpp_filename.cpp" or warn $!;  # Unlink the test source.
+
+
 # Apply the defaults:
 open CPP, "CPP.pm";
 my @lines = <CPP>;
 close CPP;
 
 for (@lines) {
-#    s|\@COMPILER|$cpp_compiler| if m|\# default compiler|;
-#    s|\@DEFAULTLIBS|$libs| if m|\# default libs|;
 
 	$_ =	" \$o->{ILSM}{MAKEFILE}{CC} ||= '$cpp_compiler'; "
 			. "# default compiler\n"
@@ -91,6 +136,10 @@ for (@lines) {
 	$_  =	" \$o->{ILSM}{MAKEFILE}{LIBS} ||= ['$libs']; "
 			. "# default libs\n"
 		if $_ =~ /# default libs/;
+	
+	$_  =	" my \$iostream = '$iostream_fname_style';"
+			. " # default iostream filename\n"
+		if $_ =~ /# default iostream filename/;
 
 }
 
