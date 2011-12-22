@@ -1,4 +1,9 @@
 Revision history for Perl extension Inline::CPP.
+0.33_003  Thu Dec 22 01:20:00 PST 2011
+    [Feature added by David Oswald]
+    - Added two #define definitions to assist users in determining if the
+      target compiler supports namespaces and Standard headers.  This
+      will assist users in writing compiler-agnostic or portable code.
 0.33_002  Tue Dec 20 10:10:00 PST 2011
     [Patch submitted by BrowserUk, adapted by davido]
     - Better handling of the '.h' code in Makefile.PL with respect to

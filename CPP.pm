@@ -18,7 +18,7 @@ use vars qw(@ISA $VERSION);
 @ISA = qw(Inline::C);
 
 # Development releases will have a _0xx version suffix.
-$VERSION = '0.33_002';
+$VERSION = '0.33_003';
 $VERSION = eval $VERSION; # To accommodate dev. version numbers.
 
 
@@ -71,7 +71,29 @@ extern "C" {
 #include <%iostream%>
 #endif
 
+
 END
+
+
+# Don't edit this here-doc.  These are set by Makefile.PL.  Override
+# by supplying undefs in an AUTO_INCLUDE configuration.
+my $flavor_defs =  <<END_FLAVOR_DEFINITIONS;
+
+#define __INLINE_CPP_STANDARD_HEADERS 1
+#define __INLINE_CPP_NAMESPACE_STD 1
+
+END_FLAVOR_DEFINITIONS
+
+
+    # Prepend the compiler flavor (Standard versus Legacy) #define's
+    # to the AUTO_INCLUDE boilerplate.  We prepend because that way
+    # it's easy for a user to #undef them in a custom-supplied
+    # AUTO_INCLUDE.  May be useful for overriding errant defaults,
+    # or testing.
+    $o->{ILSM}{AUTO_INCLUDE} = 
+        $flavor_defs . $o->{ILSM}{AUTO_INCLUDE};
+
+
     $o->{ILSM}{PRESERVE_ELLIPSIS} = 0
       unless defined $o->{ILSM}{PRESERVE_ELLIPSIS};
 
@@ -105,13 +127,11 @@ END
     }
 
     # Replace %iostream% with the correct iostream library
+
     # It is critical that the following line not have its "comment"
     # altered: Makefile.PL finds the line and alters the iostream name.
  my $iostream = 'iostream'; # default iostream filename
-#    if($o->{ILSM}{MAKEFILE}{CC} =~ /^cl/) {
-#        $iostream .= ".h"
-#            unless $o->{ILSM}{STD_IOSTREAM};
-#    }
+
     $o->{ILSM}{AUTO_INCLUDE} =~ s|%iostream%|$iostream|g;
 
     # Forward all unknown requests up to Inline::C

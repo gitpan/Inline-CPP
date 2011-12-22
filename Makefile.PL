@@ -1,6 +1,5 @@
 use ExtUtils::MakeMaker;
 use Config;
-use diagnostics;
 
 my %PREREQ_PM = (
     'Inline' => '0.49',
@@ -117,10 +116,14 @@ if( $cpp_compiler =~ /^cl/ ) {
 }
 
 my $iostream_fname_style = 'iostream';
+my $namespace_std    = "#define __INLINE_CPP_NAMESPACE_STD 1\n";
+my $standard_headers = "#define __INLINE_CPP_STANDARD_HEADERS 1\n";
 if( $result != 0 ) {
     # Compiling with <iostream> failed, so we'll assume .h headers.
     print "Detected <iostream.h> style headers. ('.h' needed.)\n";
     $iostream_fname_style = 'iostream.h';
+    $namespace_std    = "// $namespace_std";
+    $standard_headers = "// $standard_headers";
 } else {
     # Compiling with <iostream> passed, so we'll assume Standard headers.
     print "Detected <iostream> style headers. ('.h' not needed.)\n";
@@ -139,15 +142,21 @@ for (@lines) {
 
     $_ =    " \$o->{ILSM}{MAKEFILE}{CC} ||= '$cpp_compiler'; "
             . "# default compiler\n"
-        if $_ =~ /# default compiler/;
+        if /# default compiler/;
 
     $_  =   " \$o->{ILSM}{MAKEFILE}{LIBS} ||= ['$libs']; "
             . "# default libs\n"
-        if $_ =~ /# default libs/;
+        if /# default libs/;
 
     $_  =   " my \$iostream = '$iostream_fname_style';"
             . " # default iostream filename\n"
-        if $_ =~ /# default iostream filename/;
+        if /# default iostream filename/;
+
+    $_  =   $namespace_std
+        if /#define __INLINE_CPP_NAMESPACE_STD/;
+
+    $_  =   $standard_headers
+        if /#define __INLINE_CPP_STANDARD_HEADERS/;
 
 }
 
