@@ -18,7 +18,7 @@ use vars qw(@ISA $VERSION);
 @ISA = qw(Inline::C);
 
 # Development releases will have a _0xx version suffix.
-$VERSION = '0.33_005';
+$VERSION = '0.33_007';
 $VERSION = eval $VERSION; # To accommodate dev. version numbers.
 
 
@@ -213,9 +213,10 @@ sub info {
 sub get_parser {
     my $o = shift;
     my $grammar = Inline::CPP::grammar::grammar()
-    or croak "Can't find C++ grammar\n";
+        or croak "Can't find C++ grammar\n";
     $::RD_HINT++;
     require Parse::RecDescent;
+    #use Parse::RecDescent;
     my $parser = Parse::RecDescent->new($grammar);
     $parser->{data}{typeconv} = $o->{ILSM}{typeconv};
     $parser->{ILSM} = $o->{ILSM}; # give parser access to config options

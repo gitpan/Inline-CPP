@@ -4,7 +4,7 @@ use strict;
 use vars qw($TYPEMAP_KIND $VERSION $class_part $class_decl $star);
 
 # Dev versions will have a _0xx suffix.
-$VERSION = '0.33_005';
+$VERSION = '0.33_007';
 $VERSION = eval $VERSION;  # To accommodate dev version numbers.
 
 # Parse::RecDescent 1.90 and later have an incompatible change
@@ -14,7 +14,7 @@ $VERSION = eval $VERSION;  # To accommodate dev version numbers.
 # the version of Parse::RecDescent we are using.
 
 require Parse::RecDescent;
-
+#use Parse::RecDescent;
 
 # --------------------------------------------------
 # Patch to deal with Parse::RecDescent's funky version numbers for development
@@ -315,6 +315,7 @@ member_def: anytype <leftop: var ',' var> ';'
             }
 
 var: star(s?) IDENTIFIER '=' expr { [@item[1,2]] }
+   | star(s?) IDENTIFIER '[' expr ']' { [@item[1,2]] }
    | star(s?) IDENTIFIER          { [@item[1,2]] }
 
 arg: type IDENTIFIER '=' expr
