@@ -19,7 +19,7 @@ use vars qw(@ISA $VERSION);
 @ISA = qw(Inline::C);
 
 # Development releases will have a _0xx version suffix.
-$VERSION = '0.34_002';
+$VERSION = '0.34_003';
 $VERSION = eval $VERSION; # To accommodate dev. version numbers.
 
 
@@ -523,8 +523,14 @@ sub typeconv {
     my $ret;
     {
         no strict;
-        $ret =
-            eval qq{qq{$o->{ILSM}{typeconv}{$dir}{$tkind}}};
+        # The conditional avoids uninitialized warnings if user passes
+        # a C++ function with 'void' as param.
+        if( defined( $tkind ) ) {
+            # Even without the conditional this line must remain.
+            $ret = eval qq{qq{$o->{ILSM}{typeconv}{$dir}{$tkind}}};
+        } else {
+            $ret = '';
+        }
     }
     chomp $ret;
     $ret =~ s/\n/\\\n/g if $preproc;
