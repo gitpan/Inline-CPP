@@ -25,8 +25,8 @@ grammar/t/14const.t
 grammar/t/15stvar.t
 grammar/t/16varlst.t
 grammar/t/17memberarray.t
-grammar/t/18voidparam.t
 lib/Inline/CPP.pod
+lib/Inline/CPP/Config.pm
 t/00load_prereqs.t
 t/01fn_cans.t
 t/02basic.t
