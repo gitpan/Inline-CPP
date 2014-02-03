@@ -1150,6 +1150,10 @@ Other grammar problems will probably be noticed quickly.  This is Perl, C++, and
 XS all sealed into one can of worms.  But it can be fun, which is a description
 never applied to raw XS.
 
+There are a number of smoke test FAILS that will only reasonably occur in a
+testing environment.  Most of these are a result of the module being tested
+in parallel.  It is unlikely that in a real-world environment compilation will
+ever take place in parallel.
 
 =head1 SEE ALSO
 
