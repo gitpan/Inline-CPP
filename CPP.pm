@@ -20,7 +20,7 @@ our @ISA = qw( Inline::C ); ## no critic (ISA)
 # Development releases will have a _0xx version suffix.
 # We eval the version number to accommodate dev. version numbering, as
 # described in perldoc perlmodstyle.
-our $VERSION = '0.49';
+our $VERSION = '0.51';
 #$VERSION = eval $VERSION; ## no critic (eval)
 
 my $TYPEMAP_KIND;
@@ -120,26 +120,46 @@ sub _handle_config_options {
     while ( @config_options ) {
         my ( $key, $value )
             = (  shift @config_options,  shift @config_options  );
-        if ( $key eq 'LIBS' ) {
+        $key = uc $key;
+        if( $key eq 'NAMESPACE' ) {
+            _handle_namespace_cfg_option( $o, $value );
+        }
+        elsif ( $key eq 'LIBS' ) {
             _handle_libs_cfg_option( $o, $value );
-            next;
         }
-        if ( $key eq 'ALTLIBS' ) {
+        elsif ( $key eq 'ALTLIBS' ) {
             _handle_altlibs_cfg_option( $o, $value );
-            next;
         }
-        if (     $key eq 'PRESERVE_ELLIPSIS'
-             or  $key eq 'STD_IOSTREAM' )
+        elsif (     $key eq 'PRESERVE_ELLIPSIS'
+                or  $key eq 'STD_IOSTREAM'      )
         {
             croak "Argument to $key must be 0 or 1"
                 unless $value == 0
                     or $value == 1;
             $o->{ILSM}{$key} = $value;
-            next;
         }
-        push @propagate, $key, $value;
+        else {
+            push @propagate, $key, $value;
+        }
     }
     return @propagate;
+}
+
+sub _handle_namespace_cfg_option {
+  my ( $o, $value ) = @_;
+  $value =~ s/^::|::$//g;
+  croak "$value is an invalid package name."
+    unless
+      length $value == 0
+      || $value =~ m/
+                      \A
+                      [\p{XID_Start}_][\p{XID_Continue}_]+
+                      (?:::[\p{XID_Start}_][\p{XID_Continue}_]+)*
+                      \z
+                    /x;
+  $value ||= 'main';
+  $o->{API}{pkg} = $value;
+  return;
 }
 
 
@@ -285,7 +305,8 @@ sub xs_generate {
 #============================================================================
 sub xs_bindings {
     my $o = shift;
-    my ( $pkg, $module ) = @{ $o->{API} }{ qw(pkg module modfname) };
+    # What is modfname, and why are we taking it from a slice but not using it?
+    my ( $pkg, $module ) = @{ $o->{API} }{ qw(pkg module) };
     my $data = $o->{ILSM}{parser}{data};
     my @XS;
 

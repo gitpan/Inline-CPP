@@ -8,7 +8,6 @@ use strict;
 
 # We're using bareword file handles and two arg open for backward
 # compatibility in Makefile.PL.  Here we disable those tests in Perl::Critic.
-
 ## no critic (bareword file handle)
 ## no critic (two-argument open)
 
@@ -241,10 +240,11 @@ WriteMakefile(
         provides => {
             'Inline::CPP' => {
                 file    => 'CPP.pm',
-                version => '0.49'
+                version => '0.51'
             },
         },
     },
     MIN_PERL_VERSION => '5.006001',
+    test =>        { RECURSIVE_TEST_FILES => 1 },
     clean            => { FILES => '_Inline/ grammar/_Inline' },
 );

@@ -1,5 +1,15 @@
 Revision history for Perl extension Inline::CPP.
 
+0.51 2014-07-28
+  - Add NAMESPACE configuration option to override a class's base namespace
+    (Eliminates the need for the "Namespace Hack").
+  - Tests now run recursively from subdirectories.
+  - POD updates to explain NAMESPACE config option.
+  - Tests for NAMESPACE config option.
+
+0.50 2014-02-05
+  - Fix POD markup error.
+
 0.49 2014-02-03
   - Eliminate some dead code.
   - Better documentation of parallel compilation issues (which never show up
