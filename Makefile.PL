@@ -223,7 +223,7 @@ close CPP_Config
 WriteMakefile(
     NAME           => 'Inline::CPP',
     AUTHOR         => 'David Oswald <davido@cpan.org>',
-    VERSION_FROM   => 'CPP.pm',
+    VERSION_FROM   => 'lib/Inline/CPP.pm',
     ABSTRACT_FROM  => 'lib/Inline/CPP.pod',
     LICENSE        => 'artistic',
     PREREQ_PM      => \%PREREQ_PM,
@@ -239,12 +239,20 @@ WriteMakefile(
     META_MERGE => {
         provides => {
             'Inline::CPP' => {
-                file    => 'CPP.pm',
-                version => '0.51'
+                file    => 'lib/Inline/CPP.pm',
+                version => '0.52',
+            },
+            'Inline::CPP::grammar' => {
+                file    => 'lib/Inline/CPP/grammar.pm',
+                version => '0.52',
+            },
+            'Inline::CPP::Config' => {
+                file    => 'lib/Inline/CPP/Config.pm',
+                version => '0.52',
             },
         },
     },
     MIN_PERL_VERSION => '5.006001',
-    test =>        { RECURSIVE_TEST_FILES => 1 },
-    clean            => { FILES => '_Inline/ grammar/_Inline' },
+    test  => { RECURSIVE_TEST_FILES => 1 },
+    clean => { FILES => '_Inline/' }, # May add more than one path, space delimeted.
 );

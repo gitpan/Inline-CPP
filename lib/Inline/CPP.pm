@@ -1,6 +1,5 @@
 package Inline::CPP;
 
-
 use strict;
 use warnings;
 use 5.006000;
@@ -20,7 +19,7 @@ our @ISA = qw( Inline::C ); ## no critic (ISA)
 # Development releases will have a _0xx version suffix.
 # We eval the version number to accommodate dev. version numbering, as
 # described in perldoc perlmodstyle.
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 #$VERSION = eval $VERSION; ## no critic (eval)
 
 my $TYPEMAP_KIND;
@@ -663,6 +662,8 @@ sub typeconv {
         # The conditional avoids uninitialized warnings if user passes
         # a C++ function with 'void' as param.
         if( defined $tkind ) {
+            # eval of typemap gives "Uninit"
+	          no warnings 'uninitialized'; ## no critic (warnings)
             # Even without the conditional this line must remain.
             $ret = eval                                    ## no critic (eval)
                 qq{qq{$o->{ILSM}{typeconv}{$dir}{$tkind}}};
