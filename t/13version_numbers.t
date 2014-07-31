@@ -40,15 +40,13 @@ is( $config_version, $TARGET_VERSION,
 
 
 
-
+# Makefile.PL's dist version, for META_MERGE.
 my $makefile_pl = slurp_file( '../Makefile.PL' );
-ok( $makefile_pl =~ m/Inline::CPP'?\s*=>\s*\{[^}]*version\s*=>\s*'?([\d._]+)/,
-    'Found an Inline::CPP version number in META_MERGE data from Makefile.PL' );
-
+ok( $makefile_pl =~ m/^\s*my\s*\$DIST_VERSION\s*=\s*'([\d._]+)'\s*;/m,
+    'Found a distribution version number in Makefile.PL' );
 my $makefile_pl_version = eval $1;
 is( $makefile_pl_version, $TARGET_VERSION, 
     'Makefile.PL version matches target.'  );
-
 
 my $changes = slurp_file( '../Changes' );
 ok( $changes =~ m/^([\d._]+)\s/m,
