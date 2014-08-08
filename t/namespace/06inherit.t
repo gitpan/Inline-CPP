@@ -5,7 +5,9 @@ package Foo;
 use strict;
 use warnings;
 
-use Inline CPP => Config => namespace => '';
+# Notice, case insensitive 'config'. Let's keep it that way in support of
+# t/15config_case.t
+use Inline CPP => config => namespace => '';
 
 use Inline CPP => <<'EOCPP';
 
@@ -35,9 +37,11 @@ is ref($f), 'Foo', 'Our "Foo" is a "Foo".';
 is $f->fetch, '10', 'Accessor properly associated.';
 
 
+
 can_ok 'Bar', 'new';
 my $bf = new_ok 'Bar';
 is ref($bf), 'Bar', 'Our "Bar" is a "Bar"';
-is $bf->fetch, 10, 'Proper object method association from Bar.';
-
+is $bf->fetch, 10, 
+   'Inheritance and object method association from Bar.';
+is $bf->myfetch, 10, 'Method resolution for subclass.';
 done_testing();
