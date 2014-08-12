@@ -4,7 +4,9 @@ use lib "$FindBin::Bin/inc";
 use ILCPPConfig::CompilerGuess 'guess_compiler';
 use Fcntl qw( :DEFAULT :flock );
 use strict;
-# use 5.006000
+# use 5.008001
+# Inline v0.62 now requires 5.008001.
+
 
 # We're using bareword file handles and two arg open for backward
 # compatibility in Makefile.PL.  Here we disable those tests in Perl::Critic.
@@ -12,7 +14,7 @@ use strict;
 ## no critic (two-argument open)
 
 # The next line is verified via t/13version_numbers.t. Retain single quoting.
-my $DIST_VERSION    = '0.57';                        # DRY in Makefile.PL.
+my $DIST_VERSION    = '0.58';                        # DRY in Makefile.PL.
 my $CPP_Config_path = 'lib/Inline/CPP/Config.pm';
 
 my $test_cpp_filename = 'ilcpptest';        # '.cpp' appended via open.
@@ -91,7 +93,7 @@ WriteMakefile(
       },
     },
   },
-  MIN_PERL_VERSION => '5.006001',
+  MIN_PERL_VERSION => '5.008001',  # Modern Inline versions require 5.8.1.
   test  => { RECURSIVE_TEST_FILES => 1 },
   clean => { FILES => '_Inline/ Inline-CPP-*/' }, # Paths can be space delimited.
 );
