@@ -15,7 +15,7 @@ use strict;
 
 # The next line is verified via t/13version_numbers.t. Retain single quoting.
 
-my $DIST_VERSION    = '0.62';                        # DRY in Makefile.PL.
+my $DIST_VERSION    = '0.63';                        # DRY in Makefile.PL.
 
 my $CPP_Config_path = 'lib/Inline/CPP/Config.pm';
 
@@ -97,7 +97,7 @@ WriteMakefile(
   },
   MIN_PERL_VERSION => '5.008001',  # Modern Inline versions require 5.8.1.
   test  => { RECURSIVE_TEST_FILES => 1 },
-  clean => { FILES => '_Inline/ Inline-CPP-*/' }, # Paths can be space delimited.
+  clean => { FILES => '_Inline/ t/_Inline t/classes/_Inline t/grammar/_Inline t/namespace/_Inline Inline-CPP-*/' }, # Paths can be space delimited.
 );
 
 #============================================================================
