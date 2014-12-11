@@ -6,7 +6,7 @@ use 5.008001;
 use Fcntl qw( :DEFAULT :flock );
 
 require Inline::C;
-require Inline::CPP::Grammar;
+require Inline::CPP::Parser::RecDescent;
 require Inline::CPP::Config;
 
 # Note: Parse::RecDescent 'require'd within get_parser().
@@ -19,13 +19,13 @@ our @ISA = qw( Inline::C );    ## no critic (ISA)
 # Development releases will have a _0xx version suffix.
 # We eval the version number to accommodate dev. version numbering, as
 # described in perldoc perlmodstyle.
-our $VERSION = '0.68';
+our $VERSION = '0.69';
 # $VERSION = eval $VERSION; ## no critic (eval)
 
 my $TYPEMAP_KIND;
 {
   no warnings 'once';          ## no critic (warnings)
-  $TYPEMAP_KIND = $Inline::CPP::Grammar::TYPEMAP_KIND;
+  $TYPEMAP_KIND = $Inline::CPP::Parser::RecDescent::TYPEMAP_KIND;
 }
 
 #============================================================================
@@ -287,16 +287,8 @@ sub info {
 # Generate a C++ parser
 #============================================================================
 sub get_parser {
-  my $o       = shift;
-  my $grammar = Inline::CPP::Grammar::grammar()
-    or croak "Can't find C++ grammar\n";
-  no warnings qw/ once /;    ## no critic (warnings)
-  $::RD_HINT = 1;    # Turns on Parse::RecDescent's warnings/diagnostics.
-  require Parse::RecDescent;
-  my $parser = Parse::RecDescent->new($grammar);
-  $parser->{data}{typeconv} = $o->{ILSM}{typeconv};
-  $parser->{ILSM} = $o->{ILSM};    # give parser access to config options
-  return $parser;
+  my $o = shift;
+  return Inline::CPP::Parser::RecDescent::get_parser_recdescent($o);
 }
 
 #============================================================================
